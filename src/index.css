@@ -1,5 +1,11 @@
- .laura{
-     font-family: 'Amita', cursive;
-     font-size: 40px;
-     position: relative;
- }
+.laura {
+    font-family: 'Amita', cursive;
+    font-size: 20px;
+    position: relative;
+}
+
+.titulo {
+    font-family: 'Montserrat', cursive;
+    font-size: 10px;
+    position: relative;
+}
