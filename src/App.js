@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import './App.css'
 
 function Square({myid, value, onSquareClick, mywinner}) {
@@ -59,22 +59,22 @@ function Board({xIsNext, squares, onPlay}) {
 
     return (
         <>
-            <div className="status">{status}</div>
-            <div className="board-row">
+            <div className="row">
                 <Square myid={0} value={squares[0]} onSquareClick={() => handleClick(0)} mywinner={winner}/>
                 <Square myid={1} value={squares[1]} onSquareClick={() => handleClick(1)} mywinner={winner}/>
                 <Square myid={2} value={squares[2]} onSquareClick={() => handleClick(2)} mywinner={winner}/>
             </div>
-            <div className="board-row">
+            <div className="row">
                 <Square myid={3} value={squares[3]} onSquareClick={() => handleClick(3)} mywinner={winner}/>
                 <Square myid={4} value={squares[4]} onSquareClick={() => handleClick(4)} mywinner={winner}/>
                 <Square myid={5} value={squares[5]} onSquareClick={() => handleClick(5)} mywinner={winner}/>
             </div>
-            <div className="board-row">
+            <div className="row">
                 <Square myid={6} value={squares[6]} onSquareClick={() => handleClick(6)} mywinner={winner}/>
                 <Square myid={7} value={squares[7]} onSquareClick={() => handleClick(7)} mywinner={winner}/>
                 <Square myid={8} value={squares[8]} onSquareClick={() => handleClick(8)} mywinner={winner}/>
             </div>
+            <div className="status">{status}</div>
         </>
     );
 }
@@ -104,23 +104,17 @@ export default function Game() {
         }
         return (
             <li key={move}>
-                <button onClick={() => jumpTo(move)} style={{
-                    height: 20,
-                    width: 85,
-                    color: "white",
-                    backgroundColor: "darkgoldenrod",
-                    cursor: "pointer"
-                }}>{description}</button>
+                <button type="button" onClick={() => jumpTo(move)} className="btn btn-primary btn-sm mb-1">{description}</button>
             </li>
         );
     });
 
     return (
-        <div className="game">
-            <div className="game-board">
-                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+        <div className="game row">
+            <div className="game-board col col-12">
+                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
             </div>
-            <div className="game-info">
+            <div className="game-info col col-12">
                 <ol>{moves}</ol>
             </div>
         </div>
@@ -149,50 +143,50 @@ function calculateWinner(squares) {
             ctx.beginPath()
             if (desenho === 'h') {
                 if (num === 1 || num === 4 || num === 7) {
-                    ctx.moveTo(0, 20)
-                    ctx.lineTo(40, 20)
+                    ctx.moveTo(0, 40)
+                    ctx.lineTo(80, 40)
                 } else if (num === 0 || num === 3 || num === 6) {
-                    ctx.moveTo(5, 20)
-                    ctx.lineTo(40, 20)
+                    ctx.moveTo(5, 40)
+                    ctx.lineTo(80, 40)
                 } else if (num === 2 || num === 5 || num === 8) {
-                    ctx.moveTo(0, 20)
-                    ctx.lineTo(35, 20)
+                    ctx.moveTo(0, 40)
+                    ctx.lineTo(75, 40)
                 }
             }
             if (desenho === 'v') {
                 if (num === 3 || num === 4 || num === 5) {
-                    ctx.moveTo(20, 0)
-                    ctx.lineTo(20, 40)
+                    ctx.moveTo(40, 0)
+                    ctx.lineTo(40, 80)
                 } else if (num === 0 || num === 1 || num === 2) {
-                    ctx.moveTo(20, 5)
-                    ctx.lineTo(10, 20)
+                    ctx.moveTo(40, 5)
+                    ctx.lineTo(40, 80)
                 } else if (num === 6 || num === 7 || num === 8) {
-                    ctx.moveTo(20, 0)
-                    ctx.lineTo(20, 35)
+                    ctx.moveTo(40, 0)
+                    ctx.lineTo(40, 75)
                 }
             }
             if (desenho === 'd1') {
                 if (num === 4) {
                     ctx.moveTo(0, 0)
-                    ctx.lineTo(40, 40)
+                    ctx.lineTo(80, 80)
                 } else if (num === 0) {
-                    ctx.moveTo(5, 5)
-                    ctx.lineTo(40, 40)
+                    ctx.moveTo(6, 6)
+                    ctx.lineTo(80, 80)
                 } else if (num === 8) {
                     ctx.moveTo(0, 0)
-                    ctx.lineTo(35, 35)
+                    ctx.lineTo(74, 74)
                 }
             }
             if (desenho === 'd2') {
                 if (num === 4) {
-                    ctx.moveTo(0, 40)
-                    ctx.lineTo(40, 0)
+                    ctx.moveTo(80, 0)
+                    ctx.lineTo(0, 80)
                 } else if (num === 2) {
-                    ctx.moveTo(0, 40)
-                    ctx.lineTo(35, 5)
+                    ctx.moveTo(74, 6)
+                    ctx.lineTo(0, 80)
                 } else if (num === 6) {
-                    ctx.moveTo(5, 35)
-                    ctx.lineTo(40, 0)
+                    ctx.moveTo(80, 0)
+                    ctx.lineTo(6, 74)
                 }
             }
             ctx.stroke()

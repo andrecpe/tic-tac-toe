@@ -8,9 +8,11 @@ import './index.css'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <div className='laura'>Laura de Araújo Alves Costa</div>
-      <div className='titulo'>TIC-TAC-TOE</div>
-    <App />
+      <div className="container text-center">
+          <div className='laura'>Laura de Araújo Alves Costa</div>
+          <div className='titulo'>TIC-TAC-TOE</div>
+          <App />
+      </div>
   </React.StrictMode>
 );
 
