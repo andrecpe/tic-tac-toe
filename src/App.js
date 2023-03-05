@@ -10,7 +10,7 @@ function Square({myid, value, onSquareClick, mywinner}) {
         } else if (!mywinner) {
             el.width = 80
             el.height = 80
-            ctx.font = "100px Montserrat";
+            ctx.font = "50px Montserrat";
             ctx.fillStyle = "pink"
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
