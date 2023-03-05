@@ -8,17 +8,17 @@ function Square({myid, value, onSquareClick, mywinner}) {
         if (value === null) {
             ctx.clearRect(0, 0, el.width, el.height);
         } else if (!mywinner) {
-            el.width = 160
-            el.height = 160
+            el.width = 80
+            el.height = 80
             ctx.font = "100px Montserrat";
             ctx.fillStyle = "pink"
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(value, 80, 85)
+            ctx.fillText(value, 40, 42)
         }
     }
     return (
-        <canvas className="square" style={{width: 160, height: 160}} onClick={onSquareClick} id={'square' + myid}>
+        <canvas className="square" style={{width: 80, height: 80}} onClick={onSquareClick} id={'square' + myid}>
         </canvas>
     );
 }
@@ -32,19 +32,19 @@ function Board({xIsNext, squares, onPlay}) {
         const nSquare = document.querySelector("#square" + i)
 
         let ctx = nSquare.getContext("2d");
-        nSquare.width = 160
-        nSquare.height = 160
-        ctx.font = "100px Montserrat";
+        nSquare.width = 80
+        nSquare.height = 80
+        ctx.font = "50px Montserrat";
         ctx.fillStyle = "pink"
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
         if (xIsNext) {
             nextSquares[i] = 'X';
-            ctx.fillText('X', 80, 85);
+            ctx.fillText('X', 40, 42);
         } else {
             nextSquares[i] = 'O';
-            ctx.fillText('O', 80, 85);
+            ctx.fillText('O', 40, 42);
         }
         onPlay(nextSquares);
     }
@@ -105,8 +105,8 @@ export default function Game() {
         return (
             <li key={move}>
                 <button onClick={() => jumpTo(move)} style={{
-                    height: 40,
-                    width: 150,
+                    height: 20,
+                    width: 75,
                     color: "white",
                     backgroundColor: "darkgoldenrod",
                     cursor: "pointer"
@@ -144,55 +144,55 @@ function calculateWinner(squares) {
             let ctx = el.getContext("2d")
             // ctx.width = 160
             // ctx.height = 160
-            ctx.lineWidth = 8
+            ctx.lineWidth = 4
             ctx.strokeStyle = "pink"
             ctx.beginPath()
             if (desenho === 'h') {
                 if (num === 1 || num === 4 || num === 7) {
-                    ctx.moveTo(0, 80)
-                    ctx.lineTo(160, 80)
+                    ctx.moveTo(0, 20)
+                    ctx.lineTo(40, 20)
                 } else if (num === 0 || num === 3 || num === 6) {
-                    ctx.moveTo(20, 80)
-                    ctx.lineTo(160, 80)
+                    ctx.moveTo(5, 20)
+                    ctx.lineTo(40, 20)
                 } else if (num === 2 || num === 5 || num === 8) {
-                    ctx.moveTo(0, 80)
-                    ctx.lineTo(140, 80)
+                    ctx.moveTo(0, 20)
+                    ctx.lineTo(35, 20)
                 }
             }
             if (desenho === 'v') {
                 if (num === 3 || num === 4 || num === 5) {
-                    ctx.moveTo(80, 0)
-                    ctx.lineTo(80, 160)
+                    ctx.moveTo(20, 0)
+                    ctx.lineTo(20, 40)
                 } else if (num === 0 || num === 1 || num === 2) {
-                    ctx.moveTo(80, 20)
-                    ctx.lineTo(80, 160)
+                    ctx.moveTo(20, 5)
+                    ctx.lineTo(10, 20)
                 } else if (num === 6 || num === 7 || num === 8) {
-                    ctx.moveTo(80, 0)
-                    ctx.lineTo(80, 140)
+                    ctx.moveTo(20, 0)
+                    ctx.lineTo(20, 35)
                 }
             }
             if (desenho === 'd1') {
                 if (num === 4) {
                     ctx.moveTo(0, 0)
-                    ctx.lineTo(160, 160)
+                    ctx.lineTo(40, 40)
                 } else if (num === 0) {
-                    ctx.moveTo(20, 20)
-                    ctx.lineTo(160, 160)
+                    ctx.moveTo(5, 5)
+                    ctx.lineTo(40, 40)
                 } else if (num === 8) {
                     ctx.moveTo(0, 0)
-                    ctx.lineTo(140, 140)
+                    ctx.lineTo(35, 35)
                 }
             }
             if (desenho === 'd2') {
                 if (num === 4) {
-                    ctx.moveTo(0, 160)
-                    ctx.lineTo(160, 0)
+                    ctx.moveTo(0, 40)
+                    ctx.lineTo(40, 0)
                 } else if (num === 2) {
-                    ctx.moveTo(0, 160)
-                    ctx.lineTo(140, 20)
+                    ctx.moveTo(0, 40)
+                    ctx.lineTo(35, 5)
                 } else if (num === 6) {
-                    ctx.moveTo(20, 140)
-                    ctx.lineTo(160, 0)
+                    ctx.moveTo(5, 35)
+                    ctx.lineTo(40, 0)
                 }
             }
             ctx.stroke()
