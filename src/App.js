@@ -106,7 +106,7 @@ export default function Game() {
             <li key={move}>
                 <button onClick={() => jumpTo(move)} style={{
                     height: 20,
-                    width: 75,
+                    width: 85,
                     color: "white",
                     backgroundColor: "darkgoldenrod",
                     cursor: "pointer"
@@ -142,8 +142,8 @@ function calculateWinner(squares) {
         quadrado.forEach(num => {
             let el = document.querySelector("#square" + num)
             let ctx = el.getContext("2d")
-            // ctx.width = 160
-            // ctx.height = 160
+            ctx.width = 80
+            ctx.height = 80
             ctx.lineWidth = 4
             ctx.strokeStyle = "pink"
             ctx.beginPath()
