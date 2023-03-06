@@ -70,7 +70,7 @@ function Board({xIsNext, squares, onPlay}) {
                 <Square myid={7} value={squares[7]} onSquareClick={() => handleClick(7)}/>
                 <Square myid={8} value={squares[8]} onSquareClick={() => handleClick(8)}/>
             </div>
-            <div className="status my-2 display-6">{status}</div>
+            <div className="status my-3 display-6">{status}</div>
         </>
     );
 }
