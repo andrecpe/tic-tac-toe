@@ -130,7 +130,8 @@ function calculateWinner(squares) {
             let el = document.querySelector("#square" + num)
             let ctx = el.getContext("2d")
             ctx.lineWidth = 4
-            ctx.strokeStyle = "hotpink"
+            // ctx.strokeStyle = "hotpink"
+            ctx.strokeStyle = "pink"
             ctx.beginPath()
             if (desenho === 'h') {
                 if (num === 1 || num === 4 || num === 7) {
