@@ -1,41 +1,41 @@
 #square0 {
-    border-bottom: 1px solid pink;
-    border-right: 1px solid pink;
+    border-bottom: 2px solid pink;
+    border-right: 2px solid pink;
 }
 #square1 {
-    border-bottom: 1px solid pink;
-    border-left: 1px solid pink;
-    border-right: 1px solid pink;
+    border-bottom: 2px solid pink;
+    border-left: 2px solid pink;
+    border-right: 2px solid pink;
 }
 #square2 {
-    border-bottom: 1px solid pink;
-    border-left: 1px solid pink;
+    border-bottom: 2px solid pink;
+    border-left: 2px solid pink;
 }
 #square3 {
-    border-bottom: 1px solid pink;
-    border-top: 1px solid pink;
-    border-right: 1px solid pink;
+    border-bottom: 2px solid pink;
+    border-top: 2px solid pink;
+    border-right: 2px solid pink;
 }
 #square4 {
-    border: 1px solid pink;
+    border: 2px solid pink;
 }
 #square5 {
-    border-bottom: 1px solid pink;
-    border-top: 1px solid pink;
-    border-left: 1px solid pink;
+    border-bottom: 2px solid pink;
+    border-top: 2px solid pink;
+    border-left: 2px solid pink;
 }
 #square6 {
-    border-top: 1px solid pink;
-    border-right: 1px solid pink;
+    border-top: 2px solid pink;
+    border-right: 2px solid pink;
 }
 #square7 {
-    border-left: 1px solid pink;
-    border-top: 1px solid pink;
-    border-right: 1px solid pink;
+    border-left: 2px solid pink;
+    border-top: 2px solid pink;
+    border-right: 2px solid pink;
 }
 #square8 {
-    border-top: 1px solid pink;
-    border-left: 1px solid pink;
+    border-top: 2px solid pink;
+    border-left: 2px solid pink;
 }
 
 .btn-primary {
