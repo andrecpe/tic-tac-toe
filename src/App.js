@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import './App.css'
 
-function Square({myid, value, onSquareClick, mywinner}) {
+function Square({myid, value, onSquareClick}) {
     const el = document.querySelector("#square" + myid)
     if (el) {
         const ctx = el.getContext("2d")
         if (value === null) {
-            ctx.clearRect(0, 0, el.width, el.height);
-        } else if (!mywinner) {
-            el.width = 80
-            el.height = 80
+            ctx.clearRect(0, 0, el.width, el.height)
+        } else {
+            ctx.clearRect(0, 0, el.width, el.height)
             ctx.font = "50px Montserrat";
             ctx.fillStyle = "pink"
             ctx.textAlign = "center";
@@ -18,8 +17,7 @@ function Square({myid, value, onSquareClick, mywinner}) {
         }
     }
     return (
-        <canvas className="square" style={{width: 80, height: 80}} onClick={onSquareClick} id={'square' + myid}>
-        </canvas>
+        <canvas height="80" width="80" onClick={onSquareClick} id={'square' + myid}/>
     );
 }
 
@@ -32,8 +30,6 @@ function Board({xIsNext, squares, onPlay}) {
         const nSquare = document.querySelector("#square" + i)
 
         let ctx = nSquare.getContext("2d");
-        nSquare.width = 80
-        nSquare.height = 80
         ctx.font = "50px Montserrat";
         ctx.fillStyle = "pink"
         ctx.textAlign = "center";
@@ -59,22 +55,22 @@ function Board({xIsNext, squares, onPlay}) {
 
     return (
         <>
-            <div className="row">
-                <Square myid={0} value={squares[0]} onSquareClick={() => handleClick(0)} mywinner={winner}/>
-                <Square myid={1} value={squares[1]} onSquareClick={() => handleClick(1)} mywinner={winner}/>
-                <Square myid={2} value={squares[2]} onSquareClick={() => handleClick(2)} mywinner={winner}/>
+            <div className="d-flex justify-content-center mt-2">
+                <Square myid={0} value={squares[0]} onSquareClick={() => handleClick(0)}/>
+                <Square myid={1} value={squares[1]} onSquareClick={() => handleClick(1)}/>
+                <Square myid={2} value={squares[2]} onSquareClick={() => handleClick(2)}/>
             </div>
-            <div className="row">
-                <Square myid={3} value={squares[3]} onSquareClick={() => handleClick(3)} mywinner={winner}/>
-                <Square myid={4} value={squares[4]} onSquareClick={() => handleClick(4)} mywinner={winner}/>
-                <Square myid={5} value={squares[5]} onSquareClick={() => handleClick(5)} mywinner={winner}/>
+            <div className="d-flex justify-content-center">
+                <Square myid={3} value={squares[3]} onSquareClick={() => handleClick(3)}/>
+                <Square myid={4} value={squares[4]} onSquareClick={() => handleClick(4)}/>
+                <Square myid={5} value={squares[5]} onSquareClick={() => handleClick(5)}/>
             </div>
-            <div className="row">
-                <Square myid={6} value={squares[6]} onSquareClick={() => handleClick(6)} mywinner={winner}/>
-                <Square myid={7} value={squares[7]} onSquareClick={() => handleClick(7)} mywinner={winner}/>
-                <Square myid={8} value={squares[8]} onSquareClick={() => handleClick(8)} mywinner={winner}/>
+            <div className="d-flex justify-content-center">
+                <Square myid={6} value={squares[6]} onSquareClick={() => handleClick(6)}/>
+                <Square myid={7} value={squares[7]} onSquareClick={() => handleClick(7)}/>
+                <Square myid={8} value={squares[8]} onSquareClick={() => handleClick(8)}/>
             </div>
-            <div className="status">{status}</div>
+            <div className="status my-2 display-6">{status}</div>
         </>
     );
 }
@@ -103,21 +99,18 @@ export default function Game() {
             description = 'Reiniciar!';
         }
         return (
-            <li key={move}>
-                <button type="button" onClick={() => jumpTo(move)} className="btn btn-primary btn-sm mb-1">{description}</button>
-            </li>
+            <button type="button" onClick={() => jumpTo(move)} className="btn btn-primary btn-sm mb-1"
+                    key={move} style={{width:120}}>{description}</button>
         );
     });
 
     return (
-        <div className="game row">
-            <div className="game-board col col-12">
-                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <>
+            <div>
+                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
             </div>
-            <div className="game-info col col-12">
-                <ol>{moves}</ol>
-            </div>
-        </div>
+            <div className="d-flex flex-column align-items-center">{moves}</div>
+        </>
     );
 }
 
@@ -136,10 +129,8 @@ function calculateWinner(squares) {
         quadrado.forEach(num => {
             let el = document.querySelector("#square" + num)
             let ctx = el.getContext("2d")
-            ctx.width = 80
-            ctx.height = 80
             ctx.lineWidth = 4
-            ctx.strokeStyle = "pink"
+            ctx.strokeStyle = "hotpink"
             ctx.beginPath()
             if (desenho === 'h') {
                 if (num === 1 || num === 4 || num === 7) {
@@ -205,7 +196,9 @@ function calculateWinner(squares) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            vitoria(lines[i], desenhos[i])
+            setTimeout(() => {
+                vitoria(lines[i], desenhos[i])
+            }, 700)
             return squares[a];
         }
     }

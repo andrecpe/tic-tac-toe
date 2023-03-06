@@ -1,29 +1,39 @@
-* {
-  box-sizing: border-box;
+#square0 {
+    border-bottom: 1px solid hotpink;
+    border-right: 1px solid hotpink;
 }
-
-
-code {
-  font-size: 1.2em;
+#square1 {
+    border-bottom: 1px solid hotpink;
+    border-left: 1px solid hotpink;
+    border-right: 1px solid hotpink;
 }
-
-.square {
-  background: #fff;
-  border: 1px solid lightpink;
-  float: left;
-  cursor: pointer;
+#square2 {
+    border-bottom: 1px solid hotpink;
+    border-left: 1px solid hotpink;
 }
-
-.status {
-  font-family: 'Montserrat', cursive;
-  font-size: 12px;
-  margin-bottom: 5px;
+#square3 {
+    border-bottom: 1px solid hotpink;
+    border-top: 1px solid hotpink;
+    border-right: 1px solid hotpink;
 }
-.game {
-  display: flex;
-  flex-direction: row;
+#square4 {
+    border: 1px solid hotpink;
 }
-
-.game-info {
-  margin-left: 10px;
+#square5 {
+    border-bottom: 1px solid hotpink;
+    border-top: 1px solid hotpink;
+    border-left: 1px solid hotpink;
+}
+#square6 {
+    border-top: 1px solid hotpink;
+    border-right: 1px solid hotpink;
+}
+#square7 {
+    border-left: 1px solid hotpink;
+    border-top: 1px solid hotpink;
+    border-right: 1px solid hotpink;
+}
+#square8 {
+    border-top: 1px solid hotpink;
+    border-left: 1px solid hotpink;
 }
