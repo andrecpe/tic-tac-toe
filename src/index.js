@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <div className="container text-center">
-          <div className='laura'>Laura de Araújo Alves Costa</div>
-          <div className='titulo'>TIC-TAC-TOE</div>
+          <div className='laura my-2'>Laura de Araújo Alves Costa</div>
+          <div className='titulo mb-3'>TIC-TAC-TOE</div>
           <App />
       </div>
   </React.StrictMode>

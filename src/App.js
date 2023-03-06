@@ -9,15 +9,15 @@ function Square({myid, value, onSquareClick}) {
             ctx.clearRect(0, 0, el.width, el.height)
         } else {
             ctx.clearRect(0, 0, el.width, el.height)
-            ctx.font = "50px Montserrat";
+            ctx.font = "62px Montserrat";
             ctx.fillStyle = "pink"
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(value, 40, 42)
+            ctx.fillText(value, 50, 52)
         }
     }
     return (
-        <canvas height="80" width="80" onClick={onSquareClick} id={'square' + myid}/>
+        <canvas height="100" width="100" onClick={onSquareClick} id={'square' + myid}/>
     );
 }
 
@@ -30,7 +30,7 @@ function Board({xIsNext, squares, onPlay}) {
         const nSquare = document.querySelector("#square" + i)
 
         let ctx = nSquare.getContext("2d");
-        ctx.font = "50px Montserrat";
+        ctx.font = "62px Montserrat";
         ctx.fillStyle = "pink"
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -134,50 +134,50 @@ function calculateWinner(squares) {
             ctx.beginPath()
             if (desenho === 'h') {
                 if (num === 1 || num === 4 || num === 7) {
-                    ctx.moveTo(0, 40)
-                    ctx.lineTo(80, 40)
+                    ctx.moveTo(0, 50)
+                    ctx.lineTo(100, 50)
                 } else if (num === 0 || num === 3 || num === 6) {
-                    ctx.moveTo(5, 40)
-                    ctx.lineTo(80, 40)
+                    ctx.moveTo(6, 50)
+                    ctx.lineTo(100, 50)
                 } else if (num === 2 || num === 5 || num === 8) {
-                    ctx.moveTo(0, 40)
-                    ctx.lineTo(75, 40)
+                    ctx.moveTo(0, 50)
+                    ctx.lineTo(94, 50)
                 }
             }
             if (desenho === 'v') {
                 if (num === 3 || num === 4 || num === 5) {
-                    ctx.moveTo(40, 0)
-                    ctx.lineTo(40, 80)
+                    ctx.moveTo(50, 0)
+                    ctx.lineTo(50, 100)
                 } else if (num === 0 || num === 1 || num === 2) {
-                    ctx.moveTo(40, 5)
-                    ctx.lineTo(40, 80)
+                    ctx.moveTo(50, 6)
+                    ctx.lineTo(50, 100)
                 } else if (num === 6 || num === 7 || num === 8) {
-                    ctx.moveTo(40, 0)
-                    ctx.lineTo(40, 75)
+                    ctx.moveTo(50, 0)
+                    ctx.lineTo(50, 94)
                 }
             }
             if (desenho === 'd1') {
                 if (num === 4) {
                     ctx.moveTo(0, 0)
-                    ctx.lineTo(80, 80)
+                    ctx.lineTo(100, 100)
                 } else if (num === 0) {
-                    ctx.moveTo(6, 6)
-                    ctx.lineTo(80, 80)
+                    ctx.moveTo(7, 7)
+                    ctx.lineTo(100, 100)
                 } else if (num === 8) {
                     ctx.moveTo(0, 0)
-                    ctx.lineTo(74, 74)
+                    ctx.lineTo(93, 93)
                 }
             }
             if (desenho === 'd2') {
                 if (num === 4) {
-                    ctx.moveTo(80, 0)
-                    ctx.lineTo(0, 80)
+                    ctx.moveTo(100, 0)
+                    ctx.lineTo(0, 100)
                 } else if (num === 2) {
-                    ctx.moveTo(74, 6)
-                    ctx.lineTo(0, 80)
+                    ctx.moveTo(93, 7)
+                    ctx.lineTo(0, 100)
                 } else if (num === 6) {
-                    ctx.moveTo(80, 0)
-                    ctx.lineTo(6, 74)
+                    ctx.moveTo(100, 0)
+                    ctx.lineTo(7, 93)
                 }
             }
             ctx.stroke()
