@@ -14,6 +14,7 @@
         <v-btn color="#8A4FFF" size="small" style="color: white" v-for="(h, i) in history" :key="i"
                @click="mudaHistory(i)" width="150" class="mb-1">{{ i === 0 ? `Reiniciar!` : `Movimento #${i}` }}
         </v-btn>
+        <!--        <v-btn color="#8A4FFF" size="small" style="color: white" @click="testar">Riscar</v-btn>-->
       </v-container>
     </div>
   </v-app>
@@ -199,17 +200,10 @@ export default {
         let ctx = el.getContext("2d")
         ctx.clearRect(0, 0, this.ss, this.ss)
         ctx.stroke()
-      })
-      document.querySelectorAll('[id^="square"]').forEach(el => {
-        let ctx = el.getContext("2d")
         const myId = el.id.slice(6)
         this.printBoard(ctx, myId)
+        this.printJogada(ctx, this.squares[myId - 1])
       })
-      document.querySelectorAll('[id^="square"]').forEach(el => {
-        let ctx = el.getContext("2d")
-        this.printJogada(ctx, this.squares[el.id.slice(6) - 1])
-      })
-
       this.history.forEach(h => {
         console.log(h.num, h.jogador, h.squares)
       })
@@ -261,6 +255,24 @@ export default {
       this.printBoard(ctx, i)
     }
   },
+  /*watch: {*/
+  /*  history: {*/
+  /*    handler(val) {*/
+  /*      console.log(val.slice(-1))*/
+  /*      val.slice(-1).squares.forEach((v, i) => {*/
+  /*        const canvas = document.getElementById(`square${i + 1}`)*/
+  /*        const ctx = canvas.getContext("2d")*/
+  /*        ctx.clearRect(0, 0, this.ss, this.ss)*/
+  /*        ctx.stroke()*/
+  /*        this.printBoard(ctx, i + 1)*/
+  /*        if (v !== null) {*/
+  //           this.printJogada(ctx, v)
+  //         }
+  //       })
+  //     },
+  //     deep: true,
+  //   },
+  // },
 }
 </script>
 <style>
