@@ -14,7 +14,6 @@
         <v-btn color="#8A4FFF" size="small" style="color: white" v-for="(h, i) in history" :key="i"
                @click="mudaHistory(i)" width="150" class="mb-1">{{ i === 0 ? `Reiniciar!` : `Movimento #${i}` }}
         </v-btn>
-        <!--        <v-btn color="#8A4FFF" size="small" style="color: white" @click="testar">Riscar</v-btn>-->
       </v-container>
     </div>
   </v-app>
@@ -199,15 +198,17 @@ export default {
       document.querySelectorAll('[id^="square"]').forEach(el => {
         let ctx = el.getContext("2d")
         ctx.clearRect(0, 0, this.ss, this.ss)
-        ctx.stroke()
-        const myId = el.id.slice(6)
+      })
+      document.querySelectorAll('[id^="square"]').forEach(el => {
+        let ctx = el.getContext("2d")
+        const myId = parseInt(el.id.slice(6))
         this.printBoard(ctx, myId)
+      })
+      document.querySelectorAll('[id^="square"]').forEach(el => {
+        let ctx = el.getContext("2d")
+        const myId = parseInt(el.id.slice(6))
         this.printJogada(ctx, this.squares[myId - 1])
       })
-      this.history.forEach(h => {
-        console.log(h.num, h.jogador, h.squares)
-      })
-      console.log("squares", this.squares)
     },
   },
   computed: {
