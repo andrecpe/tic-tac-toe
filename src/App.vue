@@ -14,7 +14,6 @@
         <v-btn color="#8A4FFF" size="small" style="color: white" v-for="(h, i) in history" :key="i"
                @click="mudaHistory(i)" width="150" class="mb-1">{{ i === 0 ? `Reiniciar!` : `Movimento #${i}` }}
         </v-btn>
-        <!--        <v-btn color="#8A4FFF" size="small" style="color: white" @click="testar">Riscar</v-btn>-->
       </v-container>
     </div>
   </v-app>
