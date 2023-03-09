@@ -12,7 +12,7 @@
           {{ vencedor ? vencedor.resultado : `Próximo Jogador: ${jogador}` }}
         </div>
         <v-btn color="#8A4FFF" size="small" style="color: white" v-for="(h, i) in history" :key="i"
-               @click="mudaHistory(i)" width="150" class="mb-1">{{ i === 0 ? `Reiniciar!` : `Movimento #${i}` }}
+               @click="mudaHistory(i)" width="150" class="mb-1" :obs="h">{{ i === 0 ? `Reiniciar!` : `Movimento #${i}` }}
         </v-btn>
       </v-container>
     </div>
@@ -68,8 +68,9 @@ export default {
       ctx.fillText(val, Math.floor(this.ss * 0.5), Math.floor(this.ss * 0.54));
     },
     printBoard(ctx, board) {
+      ctx.beginPath()
       ctx.strokeStyle = this.cor
-      ctx.lineWidth = Math.floor(this.ss * 0.02)
+      ctx.lineWidth = Math.floor(this.ss * 0.04)
       switch (board) {
         case 1:
           ctx.moveTo(this.ss, 0)
@@ -126,65 +127,196 @@ export default {
           return
       }
       ctx.stroke()
+      ctx.closePath()
+      ctx.save()
     },
     printVitoria([a, b, c, desenho]) {
-      a += 1;b += 1;c += 1;
+      a += 1;
+      b += 1;
+      c += 1;
+      // console.log("chamei printVitoria", a, b, c, desenho);
+      let ordem = 1;
+      let velocidade= 0.01;
       [{ctx: document.querySelector("#square" + a).getContext("2d"), num: a},
         {ctx: document.querySelector("#square" + b).getContext("2d"), num: b},
         {ctx: document.querySelector("#square" + c).getContext("2d"), num: c}
       ].forEach(({ctx, num}) => {
+        ctx.beginPath()
         ctx.lineWidth = Math.floor(this.ss * 0.04)
         ctx.lineCap = "round"
         ctx.strokeStyle = this.cor
         if (desenho === 'h') {
           if (num === 2 || num === 5 || num === 8) {
             ctx.moveTo(0, Math.floor(this.ss * 0.5))
-            ctx.lineTo(this.ss, Math.floor(this.ss * 0.5))
+            let inicio = 0
+            const segundo = setInterval(() => {
+              if (ordem !== 2) return
+              ctx.lineTo(Math.floor(this.ss * inicio), Math.floor(this.ss * 0.5))
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio >= 1) {
+                ordem++
+                clearInterval(segundo)
+              }
+            })
+            // ctx.stroke()
+            // ctx.lineTo(this.ss, Math.floor(this.ss * 0.5))
           } else if (num === 1 || num === 4 || num === 7) {
             ctx.moveTo(Math.floor(this.ss * 0.06), Math.floor(this.ss * 0.5))
-            ctx.lineTo(this.ss, Math.floor(this.ss / 2))
+            let inicio = 0
+            const prim = setInterval(() => {
+              if (ordem !== 1) return
+              ctx.lineTo(Math.floor(this.ss * inicio), Math.floor(this.ss * 0.5))
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio >= 1) {
+                ordem++
+                clearInterval(prim)
+              }
+            })
+            // ctx.stroke()
+            // ctx.lineTo(this.ss, Math.floor(this.ss * 0.5))
           } else if (num === 3 || num === 6 || num === 9) {
-            ctx.moveTo(0, Math.floor(this.ss / 2))
-            ctx.lineTo(Math.floor(this.ss * 0.94), Math.floor(this.ss * 0.5))
+            ctx.moveTo(0, Math.floor(this.ss * 0.5))
+            let inicio = 0
+            const terc = setInterval(() => {
+              if (ordem !== 3) return
+              ctx.lineTo(Math.floor(this.ss * inicio), Math.floor(this.ss * 0.5))
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio >= 0.94) clearInterval(terc)
+            })
+            // ctx.lineTo(Math.floor(this.ss * 0.94), Math.floor(this.ss * 0.5))
           }
         }
         if (desenho === 'v') {
           if (num === 4 || num === 5 || num === 6) {
             ctx.moveTo(Math.floor(this.ss * 0.5), 0)
-            ctx.lineTo(Math.floor(this.ss * 0.5), this.ss)
+            let inicio = 0
+            const segundo = setInterval(() => {
+              if (ordem !== 2) return
+            ctx.lineTo(Math.floor(this.ss * 0.5), this.ss * inicio)
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio > 1.1) {
+                ordem++
+                clearInterval(segundo)
+              }
+            })
           } else if (num === 1 || num === 2 || num === 3) {
             ctx.moveTo(Math.floor(this.ss * 0.5), Math.floor(this.ss * 0.06))
-            ctx.lineTo(Math.floor(this.ss * 0.5), this.ss)
+            let inicio = 0.06
+            const prim = setInterval(() => {
+              if (ordem !== 1) return
+              ctx.lineTo(Math.floor(this.ss * 0.5), this.ss * inicio)
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio > 1.1) {
+                ordem++
+                clearInterval(prim)
+              }
+            })
+            // ctx.lineTo(Math.floor(this.ss * 0.5), this.ss)
           } else if (num === 7 || num === 8 || num === 9) {
             ctx.moveTo(Math.floor(this.ss * 0.5), 0)
-            ctx.lineTo(Math.floor(this.ss * 0.5), Math.floor(this.ss * 0.94))
+            let inicio = 0
+            const terc = setInterval(() => {
+              if (ordem !== 3) return
+              ctx.lineTo(Math.floor(this.ss * 0.5), this.ss * inicio)
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio > 0.94) clearInterval(terc)
+            })
+            // ctx.lineTo(Math.floor(this.ss * 0.5), Math.floor(this.ss * 0.94))
           }
         }
         if (desenho === 'd1') {
           if (num === 5) {
             ctx.moveTo(0, 0)
-            ctx.lineTo(this.ss, this.ss)
+            let inicio = 0
+            const segundo = setInterval(() => {
+              if (ordem !== 2) return
+              ctx.lineTo(this.ss * inicio, this.ss * inicio)
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio > 1.1) {
+                ordem++
+                clearInterval(segundo)
+              }
+            })
+            // ctx.lineTo(this.ss, this.ss)
           } else if (num === 1) {
             ctx.moveTo(Math.floor(this.ss * 0.08), Math.floor(this.ss * 0.08))
-            ctx.lineTo(this.ss, this.ss)
+            let inicio = 0.08
+            const prim = setInterval(() => {
+              if (ordem !== 1) return
+              ctx.lineTo(this.ss * inicio, this.ss * inicio)
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio > 1.1) {
+                ordem++
+                clearInterval(prim)
+              }
+            })
+            // ctx.lineTo(this.ss, this.ss)
           } else if (num === 9) {
             ctx.moveTo(0, 0)
-            ctx.lineTo(Math.floor(this.ss * 0.92), Math.floor(this.ss * 0.92))
+            let inicio = 0
+            const terc = setInterval(() => {
+              if (ordem !== 3) return
+              ctx.lineTo(this.ss * inicio, this.ss * inicio)
+              inicio += velocidade
+              ctx.stroke()
+              if (inicio > 0.92) clearInterval(terc)
+            })
+            // ctx.lineTo(Math.floor(this.ss * 0.92), Math.floor(this.ss * 0.92))
           }
         }
         if (desenho === 'd2') {
           if (num === 5) {
             ctx.moveTo(this.ss, 0)
-            ctx.lineTo(0, this.ss)
+            let inicio = 1
+            const segundo = setInterval(() => {
+              if (ordem !== 2) return
+              ctx.lineTo(this.ss * inicio, this.ss * (1-inicio))
+              inicio -= velocidade
+              ctx.stroke()
+              if (inicio < -0.1) {
+                ordem++
+                clearInterval(segundo)
+              }
+            })
+            // ctx.lineTo(0, this.ss)
           } else if (num === 3) {
             ctx.moveTo(Math.floor(this.ss * 0.94), Math.floor(this.ss * 0.06))
-            ctx.lineTo(0, this.ss)
+            let inicio = 0.94
+            const prim = setInterval(() => {
+              if (ordem !== 1) return
+              ctx.lineTo(this.ss * inicio, this.ss * (1-inicio))
+              inicio -= velocidade
+              ctx.stroke()
+              if (inicio < -0.1) {
+                ordem++
+                clearInterval(prim)
+              }
+            })
+            // ctx.lineTo(0, this.ss)
           } else if (num === 7) {
             ctx.moveTo(this.ss, 0)
-            ctx.lineTo(Math.floor(this.ss * 0.06), Math.floor(this.ss * 0.94))
+            let inicio = 1
+            const terc = setInterval(() => {
+              if (ordem !== 3) return
+              ctx.lineTo(this.ss * inicio, this.ss * (1-inicio))
+              inicio -= velocidade
+              ctx.stroke()
+              if (inicio < 0.06) clearInterval(terc)
+            })
+            // ctx.lineTo(Math.floor(this.ss * 0.06), Math.floor(this.ss * 0.94))
           }
         }
         ctx.stroke()
+        ctx.closePath()
+        ctx.save()
       })
     },
     mudaHistory(num) {
@@ -197,16 +329,11 @@ export default {
       }
       document.querySelectorAll('[id^="square"]').forEach(el => {
         let ctx = el.getContext("2d")
+        ctx.beginPath()
         ctx.clearRect(0, 0, this.ss, this.ss)
-      })
-      document.querySelectorAll('[id^="square"]').forEach(el => {
-        let ctx = el.getContext("2d")
+        ctx.closePath()
         const myId = parseInt(el.id.slice(6))
         this.printBoard(ctx, myId)
-      })
-      document.querySelectorAll('[id^="square"]').forEach(el => {
-        let ctx = el.getContext("2d")
-        const myId = parseInt(el.id.slice(6))
         this.printJogada(ctx, this.squares[myId - 1])
       })
     },
@@ -256,24 +383,6 @@ export default {
       this.printBoard(ctx, i)
     }
   },
-  /*watch: {*/
-  /*  history: {*/
-  /*    handler(val) {*/
-  /*      console.log(val.slice(-1))*/
-  /*      val.slice(-1).squares.forEach((v, i) => {*/
-  /*        const canvas = document.getElementById(`square${i + 1}`)*/
-  /*        const ctx = canvas.getContext("2d")*/
-  /*        ctx.clearRect(0, 0, this.ss, this.ss)*/
-  /*        ctx.stroke()*/
-  /*        this.printBoard(ctx, i + 1)*/
-  /*        if (v !== null) {*/
-  //           this.printJogada(ctx, v)
-  //         }
-  //       })
-  //     },
-  //     deep: true,
-  //   },
-  // },
 }
 </script>
 <style>
