@@ -136,7 +136,7 @@ export default {
       c += 1;
       // console.log("chamei printVitoria", a, b, c, desenho);
       let ordem = 1;
-      let velocidade= 0.01;
+      let velocidade= 0.02;
       [{ctx: document.querySelector("#square" + a).getContext("2d"), num: a},
         {ctx: document.querySelector("#square" + b).getContext("2d"), num: b},
         {ctx: document.querySelector("#square" + c).getContext("2d"), num: c}
