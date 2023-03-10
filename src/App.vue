@@ -321,8 +321,12 @@ export default {
     },
   },
   mounted() {
-    this.drawNomes("nome", "Laura de Araújo Alves Costa", "Amita", 20, 150, 18)
-    this.drawNomes("jogo", "TIC-TAC-TOE", "Montserrat", 16, 150, 12)
+    (async function check(fora) {
+      await document.fonts.load("20px Amita")
+      fora.drawNomes("nome", "Laura de Araújo Alves Costa", "Amita", 20, 150, 18)
+      await document.fonts.load("16px Montserrat")
+      fora.drawNomes("jogo", "TIC-TAC-TOE", "Montserrat", 16, 150, 12)
+    })(this)
     this.printBoard()
     this.clearBoard()
   },
