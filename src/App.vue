@@ -1,20 +1,21 @@
 <template>
-      <div class="mycontainer mymain">
-        <canvas id="nome" height="30" width="300"></canvas>
-        <canvas id="jogo" height="24" width="300" class="jogo"></canvas>
-        <div class="subone" v-for="i in 3" :key="i">
-          <canvas :id="`square${(i-1) * 3 + j}`" :height="ss" :width="ss" v-for="j in 3" :key="j"
-                  :style="{cursor: squares[(i-1) * 3 + j -1]=== null ? 'pointer' : 'default'}" @click="jogar((i-1) * 3 + j)"/>
-        </div>
-        <div class="placar">
-          {{ vencedor ? vencedor.resultado : `Próximo Jogador: ${jogador}` }}
-        </div>
-        <button class="mybtn" v-for="i in history.length" :key="i"
-               @click="mudaHistory(i-1)">{{
-            i === 0 ? `Reiniciar!` : `Movimento #${i}`
-          }}
-        </button>
-      </div>
+  <div class="mycontainer mymain">
+    <canvas id="nome" height="30" width="300"></canvas>
+    <canvas id="jogo" height="24" width="300" class="jogo"></canvas>
+    <div class="subone" v-for="i in 3" :key="i">
+      <canvas :id="`square${(i-1) * 3 + j}`" :height="ss" :width="ss" v-for="j in 3" :key="j"
+              :style="{cursor: squares[(i-1) * 3 + j -1]=== null ? 'pointer' : 'default'}"
+              @click="jogar((i-1) * 3 + j)"/>
+    </div>
+    <div class="placar">
+      {{ vencedor ? vencedor.resultado : `Próximo Jogador: ${jogador}` }}
+    </div>
+    <button class="mybtn" v-for="i in history.length" :key="i"
+            @click="mudaHistory(i-1)">{{
+        (i-1) === 0 ? `Reiniciar!` : `Movimento #${(i-1)}`
+      }}
+    </button>
+  </div>
 </template>
 
 <script>
@@ -28,8 +29,8 @@ export default {
   }),
   methods: {
     jogar(num) {
-      if (this.squares[num-1] !== null || this.vencedor) return
-      this.squares[num-1] = this.jogador
+      if (this.squares[num - 1] !== null || this.vencedor) return
+      this.squares[num - 1] = this.jogador
       this.printJogada(num, this.jogador)
       this.history.push({
         num,
@@ -68,7 +69,7 @@ export default {
     clearBoard() {
       for (let l = 0; l < 3; l++) {
         for (let c = 0; c < 3; c++) {
-          const ctx = document.getElementById(`square${l * 3 + c +1}`).getContext("2d")
+          const ctx = document.getElementById(`square${l * 3 + c + 1}`).getContext("2d")
           ctx.clearRect(
               this.ss * (c === 0 ? 0 : 0.02),
               this.ss * (l === 0 ? 0 : 0.02),
@@ -337,6 +338,7 @@ export default {
   height: 100vh;
   width: 100vw;
 }
+
 .mycontainer {
   display: flex;
   flex-direction: column;
@@ -344,15 +346,18 @@ export default {
   /*justify-content: center;*/
 
 }
+
 .jogo {
   margin-bottom: 8px;
 }
+
 .subone {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
 }
+
 .placar {
   background-color: #607D8B;
   color: white;
@@ -365,6 +370,7 @@ export default {
   width: 180px;
   text-align: center;
 }
+
 .mybtn {
   color: white;
   background-color: #8A4FFF;
@@ -377,9 +383,9 @@ export default {
   width: 150px;
   text-align: center;
   cursor: pointer;
-box-shadow: #8A4FFF;
 }
-#nome{
+
+#nome {
   margin-top: 8px;
 }
 </style>
