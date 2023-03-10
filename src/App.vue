@@ -345,7 +345,7 @@ export default {
 
 }
 .jogo {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .subone {
   display: flex;
@@ -357,8 +357,8 @@ export default {
   background-color: #607D8B;
   color: white;
   padding: 12px 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   border-radius: 24px;
   font-family: "Roboto", sans-serif;
   font-size: 18px;
@@ -378,5 +378,8 @@ export default {
   text-align: center;
   cursor: pointer;
 box-shadow: #8A4FFF;
+}
+#nome{
+  margin-top: 8px;
 }
 </style>
