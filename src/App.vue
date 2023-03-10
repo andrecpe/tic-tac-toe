@@ -6,13 +6,15 @@
         <canvas id="jogo" height="24" width="300" class="mb-3"></canvas>
         <div class="d-flex justify-center" v-for="i in 3" :key="i">
           <canvas :id="`square${(i-1) * 3 + j}`" :height="ss" :width="ss" v-for="j in 3" :key="j"
-                  :style="{cursor: squares[(i-1) * 3 + j -1]=== null ? 'pointer' : 'default'}" @click="jogar"/>
+                  :style="{cursor: squares[(i-1) * 3 + j -1]=== null ? 'pointer' : 'default'}" @click="jogar((i-1) * 3 + j)"/>
         </div>
         <div class="bg-blue-grey rounded rounded-pill py-2 px-4 my-4 text-white">
           {{ vencedor ? vencedor.resultado : `Próximo Jogador: ${jogador}` }}
         </div>
         <v-btn color="#8A4FFF" size="small" style="color: white" v-for="(h, i) in history" :key="i"
-               @click="mudaHistory(i)" width="150" class="mb-1" :obs="h">{{ i === 0 ? `Reiniciar!` : `Movimento #${i}` }}
+               @click="mudaHistory(i)" width="150" class="mb-1" :obs="h">{{
+            i === 0 ? `Reiniciar!` : `Movimento #${i}`
+          }}
         </v-btn>
       </v-container>
     </div>
@@ -29,11 +31,10 @@ export default {
     squares: Array(9).fill(null),
   }),
   methods: {
-    jogar(evt) {
-      const num = evt.target.id.slice(6) - 1
-      if (this.squares[num] !== null || this.vencedor) return
-      this.squares[num] = this.jogador
-      this.printJogada(evt.target.getContext("2d"), this.jogador)
+    jogar(num) {
+      if (this.squares[num-1] !== null || this.vencedor) return
+      this.squares[num-1] = this.jogador
+      this.printJogada(num, this.jogador)
       this.history.push({
         num,
         jogador: this.jogador,
@@ -41,94 +42,44 @@ export default {
       })
       if (this.vencedor) this.printVitoria(this.vencedor.line)
     },
-    drawNome() {
-      const canvas = document.getElementById("nome")
-      const ctx = canvas.getContext("2d")
-      ctx.font = "20px Amita"
+    drawNomes(id, text, font, size, x, y) {
+      const ctx = document.getElementById(id).getContext("2d")
+      // ctx.font = "20px Amita"
+      ctx.font = `${size}px ${font}`
       ctx.fillStyle = "#1C1C1C"
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
-      ctx.fillText('Laura de Araújo Alves Costa', 150, 18)
+      ctx.fillText(text, x, y)
     },
-    drawJogo() {
-      const canvas = document.getElementById("jogo")
-      const ctx = canvas.getContext("2d")
-      ctx.font = '16px Montserrat'
-      ctx.fillStyle = '#1C1C1C'
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillText('TIC-TAC-TOE', 150, 12)
-    },
-    printJogada(ctx, val) {
+    printJogada(num, val) {
       if (!val) return
+      const ctx = document.getElementById(`square${num}`).getContext("2d")
       ctx.font = Math.floor(this.ss * 0.62) + "px Montserrat"
       ctx.fillStyle = this.cor
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
       ctx.fillText(val, Math.floor(this.ss * 0.5), Math.floor(this.ss * 0.54));
     },
-    printBoard(ctx, board) {
-      ctx.beginPath()
-      ctx.strokeStyle = this.cor
-      ctx.lineWidth = Math.floor(this.ss * 0.04)
-      switch (board) {
-        case 1:
-          ctx.moveTo(this.ss, 0)
-          ctx.lineTo(this.ss, this.ss)
-          ctx.lineTo(0, this.ss)
-          break
-        case 2:
-          ctx.moveTo(0, 0)
-          ctx.lineTo(0, this.ss)
-          ctx.lineTo(this.ss, this.ss)
-          ctx.lineTo(this.ss, 0)
-          break
-        case 3:
-          ctx.moveTo(0, 0)
-          ctx.lineTo(0, this.ss)
-          ctx.lineTo(this.ss, this.ss)
-          break
-        case 4:
-          ctx.moveTo(0, 0)
-          ctx.lineTo(this.ss, 0)
-          ctx.lineTo(this.ss, this.ss)
-          ctx.lineTo(0, this.ss)
-          break
-        case 5:
-          ctx.moveTo(0, 0)
-          ctx.lineTo(this.ss, 0)
-          ctx.lineTo(this.ss, this.ss)
-          ctx.lineTo(0, this.ss)
-          ctx.lineTo(0, 0)
-          break
-        case 6:
-          ctx.moveTo(this.ss, 0)
-          ctx.lineTo(0, 0)
-          ctx.lineTo(0, this.ss)
-          ctx.lineTo(this.ss, this.ss)
-          break
-        case 7:
-          ctx.moveTo(0, 0)
-          ctx.lineTo(this.ss, 0)
-          ctx.lineTo(this.ss, this.ss)
-          break
-        case 8:
-          ctx.moveTo(0, this.ss)
-          ctx.lineTo(0, 0)
-          ctx.lineTo(this.ss, 0)
-          ctx.lineTo(this.ss, this.ss)
-          break
-        case 9:
-          ctx.moveTo(0, this.ss)
-          ctx.lineTo(0, 0)
-          ctx.lineTo(this.ss, 0)
-          break
-        default:
-          return
+    printBoard() {
+      document.querySelectorAll('[id^="square"]').forEach(el => {
+        const ctx = el.getContext("2d")
+        ctx.beginPath()
+        ctx.strokeStyle = this.cor
+        ctx.lineWidth = Math.floor(this.ss * 0.04)
+        ctx.strokeRect(0, 0, this.ss, this.ss)
+      })
+    },
+    clearBoard() {
+      for (let l = 0; l < 3; l++) {
+        for (let c = 0; c < 3; c++) {
+          const ctx = document.getElementById(`square${l * 3 + c +1}`).getContext("2d")
+          ctx.clearRect(
+              this.ss * (c === 0 ? 0 : 0.02),
+              this.ss * (l === 0 ? 0 : 0.02),
+              this.ss * (c === 1 ? 0.96 : 0.98),
+              this.ss * (l === 1 ? 0.96 : 0.98))
+        }
       }
-      ctx.stroke()
-      ctx.closePath()
-      ctx.save()
     },
     printVitoria([a, b, c, desenho]) {
       a += 1;
@@ -136,7 +87,7 @@ export default {
       c += 1;
       // console.log("chamei printVitoria", a, b, c, desenho);
       let ordem = 1;
-      let velocidade= 0.02;
+      let velocidade = 0.02;
       [{ctx: document.querySelector("#square" + a).getContext("2d"), num: a},
         {ctx: document.querySelector("#square" + b).getContext("2d"), num: b},
         {ctx: document.querySelector("#square" + c).getContext("2d"), num: c}
@@ -195,7 +146,7 @@ export default {
             let inicio = 0
             const segundo = setInterval(() => {
               if (ordem !== 2) return
-            ctx.lineTo(Math.floor(this.ss * 0.5), this.ss * inicio)
+              ctx.lineTo(Math.floor(this.ss * 0.5), this.ss * inicio)
               inicio += velocidade
               ctx.stroke()
               if (inicio > 1.1) {
@@ -278,7 +229,7 @@ export default {
             let inicio = 1
             const segundo = setInterval(() => {
               if (ordem !== 2) return
-              ctx.lineTo(this.ss * inicio, this.ss * (1-inicio))
+              ctx.lineTo(this.ss * inicio, this.ss * (1 - inicio))
               inicio -= velocidade
               ctx.stroke()
               if (inicio < -0.1) {
@@ -292,7 +243,7 @@ export default {
             let inicio = 0.94
             const prim = setInterval(() => {
               if (ordem !== 1) return
-              ctx.lineTo(this.ss * inicio, this.ss * (1-inicio))
+              ctx.lineTo(this.ss * inicio, this.ss * (1 - inicio))
               inicio -= velocidade
               ctx.stroke()
               if (inicio < -0.1) {
@@ -306,7 +257,7 @@ export default {
             let inicio = 1
             const terc = setInterval(() => {
               if (ordem !== 3) return
-              ctx.lineTo(this.ss * inicio, this.ss * (1-inicio))
+              ctx.lineTo(this.ss * inicio, this.ss * (1 - inicio))
               inicio -= velocidade
               ctx.stroke()
               if (inicio < 0.06) clearInterval(terc)
@@ -327,14 +278,9 @@ export default {
         this.history = [...this.history.slice(0, num)]
         this.squares = [...this.history[this.history.length - 1].squares]
       }
-      document.querySelectorAll('[id^="square"]').forEach(el => {
-        let ctx = el.getContext("2d")
-        ctx.beginPath()
-        ctx.clearRect(0, 0, this.ss, this.ss)
-        ctx.closePath()
-        const myId = parseInt(el.id.slice(6))
-        this.printBoard(ctx, myId)
-        this.printJogada(ctx, this.squares[myId - 1])
+      this.clearBoard()
+      this.history.forEach(({num, jogador}) => {
+        this.printJogada(num, jogador)
       })
     },
   },
@@ -375,13 +321,10 @@ export default {
     },
   },
   mounted() {
-    this.drawNome()
-    this.drawJogo()
-    for (let i = 1; i <= 9; i++) {
-      const canvas = document.getElementById(`square${i}`)
-      const ctx = canvas.getContext("2d")
-      this.printBoard(ctx, i)
-    }
+    this.drawNomes("nome", "Laura de Araújo Alves Costa", "Amita", 20, 150, 18)
+    this.drawNomes("jogo", "TIC-TAC-TOE", "Montserrat", 16, 150, 12)
+    this.printBoard()
+    this.clearBoard()
   },
 }
 </script>
