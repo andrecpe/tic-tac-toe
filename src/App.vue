@@ -1,24 +1,20 @@
 <template>
-  <v-app>
-    <div class="mymain">
-      <v-container class="d-flex flex-column align-center">
+      <div class="mycontainer mymain">
         <canvas id="nome" height="30" width="300"></canvas>
-        <canvas id="jogo" height="24" width="300" class="mb-3"></canvas>
-        <div class="d-flex justify-center" v-for="i in 3" :key="i">
+        <canvas id="jogo" height="24" width="300" class="jogo"></canvas>
+        <div class="subone" v-for="i in 3" :key="i">
           <canvas :id="`square${(i-1) * 3 + j}`" :height="ss" :width="ss" v-for="j in 3" :key="j"
                   :style="{cursor: squares[(i-1) * 3 + j -1]=== null ? 'pointer' : 'default'}" @click="jogar((i-1) * 3 + j)"/>
         </div>
-        <div class="bg-blue-grey rounded rounded-pill py-2 px-4 my-4 text-white">
+        <div class="placar">
           {{ vencedor ? vencedor.resultado : `Próximo Jogador: ${jogador}` }}
         </div>
-        <v-btn color="#8A4FFF" size="small" style="color: white" v-for="(h, i) in history" :key="i"
-               @click="mudaHistory(i)" width="150" class="mb-1" :obs="h">{{
+        <button class="mybtn" v-for="i in history.length" :key="i"
+               @click="mudaHistory(i-1)">{{
             i === 0 ? `Reiniciar!` : `Movimento #${i}`
           }}
-        </v-btn>
-      </v-container>
-    </div>
-  </v-app>
+        </button>
+      </div>
 </template>
 
 <script>
@@ -341,5 +337,46 @@ export default {
   height: 100vh;
   width: 100vw;
 }
+.mycontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center;*/
 
+}
+.jogo {
+  margin-bottom: 12px;
+}
+.subone {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+.placar {
+  background-color: #607D8B;
+  color: white;
+  padding: 12px 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-radius: 24px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  width: 180px;
+  text-align: center;
+}
+.mybtn {
+  color: white;
+  background-color: #8A4FFF;
+  border: 1px solid #8A4FFF;
+  border-radius: 24px;
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+box-shadow: #8A4FFF;
+}
 </style>
