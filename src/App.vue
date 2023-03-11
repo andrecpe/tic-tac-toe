@@ -30,7 +30,6 @@ export default {
   methods: {
     quadrado(val) {
       const pos = val - 1
-      // console.log("top", `${Math.floor(pos / 3) * this.ss}px`, "left", `${(pos % 3) * this.ss}px`)
       return {
         position: 'absolute',
         top: `${Math.floor(pos / 3) * this.ss}px`,
@@ -105,7 +104,6 @@ export default {
         const animar = timestamp => {
           !start && (start = timestamp)
           const progress = timestamp - start
-          console.log(progress / tempo)
           x = xo + (xf - xo) * (progress / tempo)
           y = yo + (yf - yo) * (progress / tempo)
           ctx.lineTo(Math.min(Math.floor(x), xf), Math.min(Math.floor(y), yf))
