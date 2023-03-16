@@ -98,17 +98,19 @@ export default {
       ctx.strokeStyle = this.cor
       const ini = this.ss * 0.1, fim = this.ss * 2.9, parte = num => (num % 3 + 0.5) * this.ss
       const animete = (xo, yo, xf, yf) => {
-        const tempo = 800  // milisegundos
+        const tempo = 700  // milisegundos
         ctx.moveTo(xo, yo)
-        let start = null, x = xo, y = yo
+        let start = null, x, y
         const animar = timestamp => {
           !start && (start = timestamp)
-          const progress = timestamp - start
-          x = xo + (xf - xo) * (progress / tempo)
-          y = yo + (yf - yo) * (progress / tempo)
-          ctx.lineTo(Math.min(Math.floor(x), xf), Math.min(Math.floor(y), yf))
+          const progress = (timestamp - start) / tempo
+          x = Math.floor(xo + (xf - xo) * progress)
+          y = Math.floor(yo + (yf - yo) * progress)
+          const xTo = xo > xf ? Math.max(x, xf) : Math.min(x, xf)
+          const yTo = yo > yf ? Math.max(y, yf) : Math.min(y, yf)
+          ctx.lineTo(xTo, yTo)
           ctx.stroke()
-          progress < tempo && requestAnimationFrame(animar)
+          progress < 1 && requestAnimationFrame(animar)
         }
         requestAnimationFrame(animar)
       }
@@ -119,7 +121,7 @@ export default {
       line === 4 && animete(parte(line), ini, parte(line), fim)
       line === 5 && animete(parte(line), ini, parte(line), fim)
       line === 6 && animete(ini, ini, fim, fim)
-      line === 7 && animete(fim, ini, ini, fim)
+      line === 7 && animete(ini, fim, fim, ini)
     },
 
     mudaHistory(num) {
