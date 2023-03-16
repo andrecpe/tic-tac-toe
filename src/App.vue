@@ -105,7 +105,7 @@ export default {
           !start && (start = timestamp)
           const progress = timestamp - start
           x = xo + (xf - xo) * (progress / tempo)
-          y = yo - (yf - yo) * (progress / tempo)
+          y = yo + (yf - yo) * (progress / tempo)
           ctx.lineTo(Math.min(Math.floor(x), xf), Math.min(Math.floor(y), yf))
           ctx.stroke()
           progress < tempo && requestAnimationFrame(animar)
@@ -119,7 +119,7 @@ export default {
       line === 4 && animete(parte(line), ini, parte(line), fim)
       line === 5 && animete(parte(line), ini, parte(line), fim)
       line === 6 && animete(ini, ini, fim, fim)
-      line === 7 && animete(ini, fim, fim, ini)
+      line === 7 && animete(fim, ini, ini, fim)
     },
 
     mudaHistory(num) {
