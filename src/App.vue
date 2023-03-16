@@ -119,7 +119,7 @@ export default {
       line === 4 && animete(parte(line), ini, parte(line), fim)
       line === 5 && animete(parte(line), ini, parte(line), fim)
       line === 6 && animete(ini, ini, fim, fim)
-      line === 7 && animete(fim, ini, ini, fim)
+      line === 7 && animete(ini, fim, fim, ini)
     },
 
     mudaHistory(num) {
