@@ -105,7 +105,7 @@ export default {
           !start && (start = timestamp)
           const progress = timestamp - start
           x = xo + (xf - xo) * (progress / tempo)
-          y = yo + (yf - yo) * (progress / tempo)
+          y = yo - (yf - yo) * (progress / tempo)
           ctx.lineTo(Math.min(Math.floor(x), xf), Math.min(Math.floor(y), yf))
           ctx.stroke()
           progress < tempo && requestAnimationFrame(animar)
