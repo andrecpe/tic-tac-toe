@@ -51,7 +51,6 @@ export default {
     },
     drawNomes(id, text, font, size, x, y) {
       const ctx = document.getElementById(id).getContext("2d")
-      // ctx.font = "20px Amita"
       ctx.font = `${size}px ${font}`
       ctx.fillStyle = "#1C1C1C"
       ctx.textAlign = "center"
@@ -70,18 +69,137 @@ export default {
     },
     printBoard() {
       const ctx = document.getElementById("principal").getContext("2d")
-      ctx.beginPath()
       ctx.strokeStyle = this.cor
       ctx.lineWidth = Math.floor(this.ss * 0.04)
-      ctx.moveTo(this.ss, 0)
-      ctx.lineTo(this.ss, 3 * this.ss)
-      ctx.moveTo(2 * this.ss, 0)
-      ctx.lineTo(2 * this.ss, 3 * this.ss)
-      ctx.moveTo(0, this.ss)
-      ctx.lineTo(3 * this.ss, this.ss)
-      ctx.moveTo(0, 2 * this.ss)
-      ctx.lineTo(3 * this.ss, 2 * this.ss)
-      ctx.stroke()
+      const animete = (xo, yo, xf, yf, mtp = 1) => {
+        const tempo = 700 * mtp // milisegundos
+        xo *= this.ss
+        yo *= this.ss
+        xf *= this.ss
+        yf *= this.ss
+        ctx.beginPath()
+        let start = null, x, y
+        const animar = timestamp => {
+          !start && (start = timestamp)
+          const progress = (timestamp - start) / tempo
+          x = Math.floor(xo + (xf - xo) * progress)
+          y = Math.floor(yo + (yf - yo) * progress)
+          const xTo = xo > xf ? Math.max(x, xf) : Math.min(x, xf)
+          const yTo = yo > yf ? Math.max(y, yf) : Math.min(y, yf)
+          ctx.moveTo(xo, yo)
+          ctx.lineTo(xTo, yTo)
+          ctx.stroke()
+          progress < 1 && requestAnimationFrame(animar)
+        }
+        requestAnimationFrame(animar)
+      }
+
+      const tipo = {
+        1: () => {
+          animete(1, 0, 1, 3)
+          animete(2, 0, 2, 3)
+          animete(0, 1, 3, 1)
+          animete(0, 2, 3, 2)
+        },
+        2: () => {
+          animete(1, 3, 1, 0)
+          animete(2, 3, 2, 0)
+          animete(3, 1, 0, 1)
+          animete(3, 2, 0, 2)
+        },
+        3: () => {
+          animete(1, 0, 1, 3, 2)
+          animete(2, 0, 2, 3, 2)
+          animete(0, 1, 3, 1, 2)
+          animete(0, 2, 3, 2, 2)
+          animete(1, 3, 1, 0, 2)
+          animete(2, 3, 2, 0, 2)
+          animete(3, 1, 0, 1, 2)
+          animete(3, 2, 0, 2, 2)
+        },
+        4: () => {
+          animete(1.5, 1, 0, 1, 2)
+          animete(1.5, 1, 3, 1, 2)
+          animete(1, 1.5, 1, 0, 2)
+          animete(1, 1.5, 1, 3, 2)
+          animete(1.5, 2, 0, 2, 2)
+          animete(1.5, 2, 3, 2, 2)
+          animete(2, 1.5, 2, 0, 2)
+          animete(2, 1.5, 2, 3, 2)
+        },
+        5: () => {
+          animete(1, 0, 1, 3, 2)
+          animete(2, 0, 2, 3, 2)
+          animete(0, 1, 3, 1, 2)
+          animete(0, 2, 3, 2, 2)
+          animete(1, 3, 1, 0, 2)
+          animete(2, 3, 2, 0, 2)
+          animete(3, 1, 0, 1, 2)
+          animete(3, 2, 0, 2, 2)
+          animete(1, 0, 1, 3)
+          animete(2, 0, 2, 3)
+          animete(0, 1, 3, 1)
+          animete(0, 2, 3, 2)
+        },
+        6: () => {
+          animete(1, 1, 1, 0, 2)
+          animete(1, 1, 0, 1, 2)
+          animete(1, 1, 3, 1, 2)
+          animete(1, 1, 1, 3, 2)
+          animete(2, 2, 2, 3, 2)
+          animete(2, 2, 3, 2, 2)
+          animete(2, 2, 2, 0, 2)
+          animete(2, 2, 0, 2, 2)
+        },
+        7: () => {
+          animete(1, 1, 1, 0, 2)
+          animete(1, 1, 0, 1, 2)
+          animete(1, 1, 3, 1, 2)
+          animete(1, 1, 1, 3, 2)
+          animete(2, 2, 2, 3, 2)
+          animete(2, 2, 3, 2, 2)
+          animete(2, 2, 2, 0, 2)
+          animete(2, 2, 0, 2, 2)
+          animete(1, 0, 1, 3)
+          animete(2, 0, 2, 3)
+          animete(0, 1, 3, 1)
+          animete(0, 2, 3, 2)
+        },
+        8: () => {
+          animete(1, 1, 1, 0, 2)
+          animete(1, 1, 0, 1, 2)
+          animete(1, 1, 3, 1, 2)
+          animete(1, 1, 1, 3, 2)
+          animete(2, 2, 2, 3, 2)
+          animete(2, 2, 3, 2, 2)
+          animete(2, 2, 2, 0, 2)
+          animete(2, 2, 0, 2, 2)
+          animete(1, 0, 1, 3, 2)
+          animete(2, 0, 2, 3, 2)
+          animete(0, 1, 3, 1, 2)
+          animete(0, 2, 3, 2, 2)
+        },
+        9: () => {
+          animete(1, 1, 0, 1, 2)
+          animete(1, 1, 1, 0, 2)
+          animete(1, 1, 1, 2, 2)
+          animete(1, 2, 1, 3, 2)
+          animete(1, 2, 0, 2, 2)
+          animete(1, 2, 2, 2, 2)
+          animete(2, 1, 2, 0, 2)
+          animete(2, 1, 3, 1, 2)
+          animete(2, 1, 1, 1, 2)
+          animete(2, 2, 3, 2, 2)
+          animete(2, 2, 2, 3, 2)
+          animete(2, 2, 2, 1, 2)
+        },
+        // 10: () => {},
+        // 11: () => {},
+        // 12: () => {},
+      }
+      tipo[Math.floor(Math.random() * Object.keys(tipo).length + 1)]()
+      // tipo[9]()
+
     },
     clearBoard() {
       document.querySelectorAll('[id^="square"]').forEach(el => {
@@ -89,7 +207,6 @@ export default {
       })
       document.getElementById("resultado").getContext("2d").clearRect(0, 0, 3 * this.ss, 3 * this.ss)
     },
-
     printResultado(line) {
       const ctx = document.getElementById("resultado").getContext("2d")
       ctx.beginPath()
@@ -206,6 +323,21 @@ export default {
       fora.drawNomes("jogo", "TIC-TAC-TOE", "Montserrat", 16, 150, 12)
     })(this)
     this.printBoard()
+    console.log("Desenvolvido para Laura de Araújo Alves Costa")
+    console.log("By André Costa")
+    // console.log("Height", document.body.offsetHeight)
+    // console.log("Width", document.body.offsetWidth)
+    // console.log("InnerHeight", window.innerHeight)  // sem a barra de rolagem
+    // console.log("InnerWidth", window.innerWidth)  // sem a barra de rolagem
+    // console.log("OuterHeight", window.outerHeight)  // com a barra de rolagem
+    // console.log("OuterWidth", window.outerWidth)  // com a barra de rolagem
+    // console.log("ScreenHeight", screen.height)
+    // console.log("ScreenWidth", screen.width)
+    // console.log("ScreenAvailHeight", screen.availHeight)
+    // console.log("ScreenAvailWidth", screen.availWidth)
+    // console.log("ScreenColorDepth", screen.colorDepth)
+    // console.log("ScreenPixelDepth", screen.pixelDepth)
+    console.log("ScreenOrientation", screen.orientation)
   },
 }
 </script>
